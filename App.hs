@@ -50,9 +50,9 @@ take' n _
 take' _ [] = []
 take' n (x:xs) = x:take' (n-1) xs
 
-reverse' :: [a] -> [a]
-reverse' [] = []
-reverse' (x:xs) = reverse' xs ++ [x]
+-- reverse' :: [a] -> [a]
+-- reverse' [] = []
+-- reverse' (x:xs) = reverse' xs ++ [x]
 
 repeat' :: a -> [a]
 repeat' x = x:repeat' x
@@ -115,3 +115,19 @@ collatz n
   | n == 1 = [1]
   | even n = n:collatz (n `div` 2)
   | odd n = n:collatz (n*3 + 1)
+
+-- Lambda
+-- pattern matching比较弱，不能多模式匹配
+-- zipWith (\a b -> (a * 30 + 3) / b) [5,4,3,2,1] [1,2,3,4,5]  
+
+maximum' :: (Ord a) => [a] -> a
+maximum' = foldl1 (\x acc -> if x > acc then x else acc)
+
+reverse' :: [a] -> [a]
+-- reverse' = foldl (\acc x -> x:acc) []
+reverse' = foldl (flip (:)) []
+
+-- scanl (flip (:)) [] [3,2,1]
+
+sqrtSum :: Int
+sqrtSum = length (takeWhile (<1000) (scanl1 (+) (map sqrt [1..]))) + 1
