@@ -27,3 +27,12 @@ lengthCompare x y = (length x `compare` length y) `mappend`
 
 -- F.foldl (+) 2 (Just 9)
 -- F.foldr (||) False (Just True)
+
+data Tree a = Empty | Node a (Tree a) (Tree a) deriving (Show, Read, Eq)
+
+-- 先map后fold
+instance F.Foldable Tree where
+  foldMap f Empty        = mempty
+  foldMap f (Node x l r) = F.foldMap f l `mappend`
+                           f x `mappend`
+                           F.foldMap f r
