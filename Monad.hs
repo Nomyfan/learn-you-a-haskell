@@ -47,3 +47,16 @@ landRight delta (left,right)
   | otherwise = Nothing
 
 -- return (0,0) >>= landLeft 1 >>= landLeft 3
+
+-- do notation，用来解决在需要多个Monad时，存在的嵌套问题。比如
+withoutDoNotation :: Maybe String
+withoutDoNotation = Just 3 >>= (\x -> Just "!" >>= (\y -> Just (show x ++ y)))
+
+withDoNotation :: Maybe String
+withDoNotation = do
+  -- x <- Nothing :: Maybe Int
+  x <- Just 3
+  y <- Just "!"
+  Just (show x ++ y)
+
+-- 当do块里pattern matching失败，那么会调用fail方法
