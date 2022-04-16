@@ -52,3 +52,15 @@ gcdReverse a b
       return result
 
 -- mapM_ putStrLn . fromDiffList . snd . runWriter $ gcdReverse 110 34
+
+-- 对于(-> r)类型的Monad，想获得context value，
+-- 那么就是调用这个函数。
+-- instance Monad ((->) r) where
+--     return x = \_ -> x
+--     h >>= f = \w -> f (h w) w --这里为什么不是 f (h w) 返回一个Monad？
+
+addStuff :: Int -> Int
+addStuff = do
+  a <- (*2)
+  b <- (+10)
+  return (a + b)
